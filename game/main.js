@@ -1,6 +1,6 @@
 const canvas = document.getElementById('ctx');
 const context = canvas.getContext('2d');
-const resolution = 10;  // 20px per graphic unit
+const resolution = 10;  // 10px per graphic unit
 canvas.width = 110 * resolution;
 canvas.height = 70 * resolution;
 
@@ -41,6 +41,19 @@ function loadImage(url){
 function rScale(scalefactor){
     return scalefactor * resolution;
 }
+
+
+// class SpriteSheet {
+//     constructor(image, width, height) {
+//         this.image = image;
+//         this.width = width;
+//         this.height = height;
+//     }
+
+//     define(name, x, y) {
+//         const buffer = document.createElement('canvas')
+//     }
+// }
 
 
 /* -------- MAIN FUNCTION --------- */
