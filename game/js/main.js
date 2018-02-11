@@ -10,12 +10,12 @@ function rScale(scalefactor){
 }
 
 function loadBackgroundSprites() {
-    loadImage('game/img/tmpBkg.png')
+    return loadImage('game/img/tmpBkg.png')
     .then(image => {
         console.log('Image loaded', image);
         const sprites = new SpriteSheet(image, 16, 16);
-        sprites.define('ground', 0, 0);
-        sprites.define('sky', 3, 23);
+        sprites.defineTile('ground', 0, 0);
+        sprites.defineTile('sky', 3, 23);
         return sprites;
     });
 }
@@ -24,7 +24,7 @@ function drawBackground(background, context, sprites) {
     background.ranges.forEach(([x1, x2, y1, y2]) => {
         for (let x = x1; x < x2; ++x) {
             for (let y = y1; y < y2; ++y){
-                sprites.drawTile(background.tile, context, x, y);
+                sprites.drawTile(background.tiles, context, x, y);
             }
         }
     })
