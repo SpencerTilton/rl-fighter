@@ -1,3 +1,7 @@
+import {SpriteSheet} from './spritesheet';
+import {loadImage, loadLevel} from './loaders';
+
+
 const canvas = document.getElementById('ctx');
 const context = canvas.getContext('2d');
 const resolution = 10;  // 10px per graphic unit
@@ -30,16 +34,25 @@ function drawBackground(background, context, sprites) {
     })
 }
 
+// const levels = new Levels();
+// function init() {
+    
+//     levels.addLevel(fetch(`/levels/${name}`)
+//         .then(r => {
+//             r.json();
+//         })
+//     );
+// }
+
 function draw() {
     // reset game screen
     // context.fillStyle = '#4682b4';
     // context.fillRect(0, 0, canvas.width, canvas.height);
     Promise.all([
         loadBackgroundSprites(),
-        baseLevel,
+        loadLevel('base'),
     ])
     .then(([sprites, level]) => {
-        console.log('Level loaded', level);
         level.backgrounds.forEach(background => {
             drawBackground(background, context, sprites);
         });

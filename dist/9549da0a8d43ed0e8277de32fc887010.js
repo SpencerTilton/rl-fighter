@@ -70,22 +70,119 @@ require = (function (modules, cache, entry) {
   // Override the current require with this new one
   return newRequire;
 })({4:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+class SpriteSheet {
+    constructor(image, width, height) {
+        this.image = image;
+        this.width = width;
+        this.height = height;
+        this.tiles = new Map();
+    }
+
+    define(name, x, y, width, height) {
+        const buffer = document.createElement('canvas');
+        buffer.width = this.width;
+        buffer.height = this.height;
+        buffer.getContext('2d').drawImage(this.image, x, y, width, height, 0, 0, width, height);
+        this.tiles.set(name, buffer);
+    }
+
+    defineTile(name, x, y) {
+        this.define(name, x * this.width, y * this.height, this.width, this.height);
+    }
+
+    draw(name, context, x, y) {
+        const buffer = this.tiles.get(name);
+        context.drawImage(buffer, x, y);
+    }
+
+    drawTile(name, context, x, y) {
+        this.draw(name, context, x * this.width, y * this.height);
+    }
+}
+exports.default = SpriteSheet;
+},{}],7:[function(require,module,exports) {
+module.exports = {
+    "backgrounds": [
+        {
+            "tile": "sky",
+            "ranges": [
+                [
+                    0, 25,
+                    0, 14
+                ]
+            ]
+        },
+        {
+            "tile": "ground",
+            "ranges": [
+                [
+                    0, 25,
+                    12, 14
+                ]
+            ]
+        }
+    ]
+};
+},{}],5:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.loadImage = loadImage;
+exports.loadLevel = loadLevel;
+
+var _base = require('../levels/base');
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function loadImage(url) {
+    return new Promise(resolve => {
+        const image = new Image();
+        image.addEventListener('load', () => {
+            resolve(image);
+        });
+        image.src = url;
+    });
+}
+
+function loadLevel(name) {
+    return fetch(`/levels/${name}`).then(r => {
+        r.json();
+    }).then(r => {
+        console.log(r);
+    });
+    console.log("Level loaded");
+}
+},{"../levels/base":7}],2:[function(require,module,exports) {
+'use strict';
+
+var _spritesheet = require('./spritesheet');
+
+var _loaders = require('./loaders');
+
 const canvas = document.getElementById('ctx');
 const context = canvas.getContext('2d');
-const resolution = 10;  // 10px per graphic unit
+const resolution = 10; // 10px per graphic unit
 canvas.width = 110 * resolution;
 canvas.height = 70 * resolution;
 
 // used to scale values to appropriate resolution
-function rScale(scalefactor){
+function rScale(scalefactor) {
     return scalefactor * resolution;
 }
 
 function loadBackgroundSprites() {
-    return loadImage('game/img/tmpBkg.png')
-    .then(image => {
+    return (0, _loaders.loadImage)('game/img/tmpBkg.png').then(image => {
         console.log('Image loaded', image);
-        const sprites = new SpriteSheet(image, 16, 16);
+        const sprites = new _spritesheet.SpriteSheet(image, 16, 16);
         sprites.defineTile('ground', 0, 0);
         sprites.defineTile('sky', 3, 23);
         return sprites;
@@ -95,29 +192,32 @@ function loadBackgroundSprites() {
 function drawBackground(background, context, sprites) {
     background.ranges.forEach(([x1, x2, y1, y2]) => {
         for (let x = x1; x < x2; ++x) {
-            for (let y = y1; y < y2; ++y){
+            for (let y = y1; y < y2; ++y) {
                 sprites.drawTile(background.tiles, context, x, y);
             }
         }
-    })
+    });
 }
+
+// const levels = new Levels();
+// function init() {
+
+//     levels.addLevel(fetch(`/levels/${name}`)
+//         .then(r => {
+//             r.json();
+//         })
+//     );
+// }
 
 function draw() {
     // reset game screen
     // context.fillStyle = '#4682b4';
     // context.fillRect(0, 0, canvas.width, canvas.height);
-    Promise.all([
-        loadBackgroundSprites(),
-        baseLevel,
-    ])
-    .then(([sprites, level]) => {
-        console.log('Level loaded', level);
+    Promise.all([loadBackgroundSprites(), (0, _loaders.loadLevel)('base')]).then(([sprites, level]) => {
         level.backgrounds.forEach(background => {
             drawBackground(background, context, sprites);
         });
     });
-
-
 }
 
 let lastTime = 0;
@@ -131,7 +231,7 @@ function update(time = 0) {
 
 // update();
 draw();
-},{}],10:[function(require,module,exports) {
+},{"./spritesheet":4,"./loaders":5}],9:[function(require,module,exports) {
 
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
@@ -151,7 +251,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '33833' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '38431' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -252,5 +352,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id);
   });
 }
-},{}]},{},[10,4])
+},{}]},{},[9,2])
 //# sourceMappingURL=/dist/9549da0a8d43ed0e8277de32fc887010.map

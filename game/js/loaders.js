@@ -1,4 +1,6 @@
-function loadImage(url){
+import base from '../levels/base'
+
+export function loadImage(url){
     return new Promise(resolve => {
         const image = new Image();
         image.addEventListener('load', () => {
@@ -8,8 +10,14 @@ function loadImage(url){
     });
 }
 
-// may need something like this in the future
-// function loadLevel(name) {
-//     return fetch(`/levels/${name}.json`)
-//     .then(r => r.json());
-// }
+export function loadLevel(name) {
+    return fetch(`/levels/${name}`)
+    .then(r => {
+        r.json();
+    })
+    .then(r => { console.log(r);});
+    console.log("Level loaded");
+}
+
+
+
