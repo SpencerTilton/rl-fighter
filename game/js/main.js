@@ -34,8 +34,8 @@ Promise.all([
     comp.layers.push(createBackgroundLayer(level.backgrounds, backgroundSprites));
 
     const pos = {
-        x: 64,
-        y: 64,
+        x: rScale(64),
+        y: rScale(62),
     };
 
     comp.layers.push(createSpriteLayer(playerSprite, pos));

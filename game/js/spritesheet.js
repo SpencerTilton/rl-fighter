@@ -36,7 +36,6 @@ export default class SpriteSheet {
 
     draw(name, context, x, y) {
         const buffer = this.tiles.get(name);
-        console.log(buffer);
         context.drawImage(buffer, x, y);
     }
 
