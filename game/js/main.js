@@ -1,5 +1,5 @@
-// import {SpriteSheet} from './spritesheet';
-// import {loadImage, loadLevel} from './loaders';
+import SpriteSheet from './spritesheet.js';
+import {loadImage, loadLevel} from './loaders.js';
 
 
 const canvas = document.getElementById('ctx');
@@ -13,26 +13,26 @@ function rScale(scalefactor){
     return scalefactor * resolution;
 }
 
-// function loadBackgroundSprites() {
-//     return loadImage('game/img/tmpBkg.png')
-//     .then(image => {
-//         console.log('Image loaded', image);
-//         const sprites = new SpriteSheet(image, 16, 16);
-//         sprites.defineTile('ground', 0, 0);
-//         sprites.defineTile('sky', 3, 23);
-//         return sprites;
-//     });
-// }
+function loadBackgroundSprites() {
+    return loadImage('../img/tmpBkg.png')
+    .then(image => {
+        console.log('Image loaded', image);
+        const sprites = new SpriteSheet(image, 16, 16);
+        sprites.defineTile('ground', 0, 0);
+        sprites.defineTile('sky', 3, 23);
+        return sprites;
+    });
+}
 
-// function drawBackground(background, context, sprites) {
-//     background.ranges.forEach(([x1, x2, y1, y2]) => {
-//         for (let x = x1; x < x2; ++x) {
-//             for (let y = y1; y < y2; ++y){
-//                 sprites.drawTile(background.tiles, context, x, y);
-//             }
-//         }
-//     })
-// }
+function drawBackground(background, context, sprites) {
+    background.ranges.forEach(([x1, x2, y1, y2]) => {
+        for (let x = x1; x < x2; ++x) {
+            for (let y = y1; y < y2; ++y){
+                sprites.drawTile(background.tile, context, x, y);
+            }
+        }
+    })
+}
 
 // // const levels = new Levels();
 // // function init() {
@@ -44,22 +44,22 @@ function rScale(scalefactor){
 // //     );
 // // }
 
-// function draw() {
-//     // reset game screen
-//     // context.fillStyle = '#4682b4';
-//     // context.fillRect(0, 0, canvas.width, canvas.height);
-//     Promise.all([
-//         loadBackgroundSprites(),
-//         loadLevel('base'),
-//     ])
-//     .then(([sprites, level]) => {
-//         level.backgrounds.forEach(background => {
-//             drawBackground(background, context, sprites);
-//         });
-//     });
+function draw() {
+    // reset game screen
+    // context.fillStyle = '#4682b4';
+    // context.fillRect(0, 0, canvas.width, canvas.height);
+    Promise.all([
+        loadBackgroundSprites(),
+        loadLevel('base'),
+    ])
+    .then(([sprites, level]) => {
+        level.backgrounds.forEach(background => {
+            drawBackground(background, context, sprites);
+        });
+    });
 
 
-// }
+}
 
 // let lastTime = 0;
 // function update(time = 0) {
@@ -71,4 +71,4 @@ function rScale(scalefactor){
 // }
 
 // // update();
-// draw();
+draw();

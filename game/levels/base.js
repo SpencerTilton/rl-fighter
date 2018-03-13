@@ -1,11 +1,11 @@
-{
+export default {
     "backgrounds": [
         {
             "tile": "sky",
             "ranges": [
                 [
-                    0, 75,
-                    0, 60
+                    0, 25,
+                    0, 14
                 ]
             ]
         },
@@ -13,8 +13,8 @@
             "tile": "ground",
             "ranges": [
                 [
-                    0, 75,
-                    40, 60
+                    0, 25,
+                    12, 14
                 ]
             ]
         }

@@ -1,4 +1,4 @@
-import base from '../levels/base'
+//import base from '../levels/base.js'
 
 export function loadImage(url){
     return new Promise(resolve => {
@@ -11,12 +11,15 @@ export function loadImage(url){
 }
 
 export function loadLevel(name) {
-    return fetch(`/levels/${name}`)
+    return fetch(`../levels/${name}.json`)
     .then(r => {
-        r.json();
+        return r.json();
     })
-    .then(r => { console.log(r);});
-    console.log("Level loaded");
+    .then(r => { 
+        console.log(r);
+        console.log("Level loaded");
+        return r;
+    });
 }
 
 
