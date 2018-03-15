@@ -21,9 +21,9 @@ function createPlayerFactory(sprite) {
         }
 
         // if (player.run.distance > 0) {
-        //     if ((player.vel.x > 0 && player.run.dir < 0) || (player.vel.x < 0 && player.run.dir > 0)) {
-        //         return 'break';
-        //     }
+        //     // if ((player.vel.x > 0 && player.run.dir < 0) || (player.vel.x < 0 && player.run.dir > 0)) {
+        //     //     return 'break';
+        //     // }
 
         //     return runAnim(player.run.distance);
         // }
