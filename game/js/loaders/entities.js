@@ -1,4 +1,4 @@
-import {loadPlayer} from './entities/Player.js';
+import {loadPlayer} from '../entities/Player.js';
 
 
 export function loadEntities() {
