@@ -7,7 +7,7 @@
                     "name": "sky",
                     "ranges": [
                         [
-                            0, 22,
+                            0, 100,
                             0, 14
                         ]
                     ]
@@ -21,12 +21,32 @@
                     "type": "ground",
                     "ranges": [
                         [
-                            0, 22,
+                            0, 100,
                             12, 2
+                        ]
+                    ]
+                },
+                {
+                    "name": "sky",
+                    "ranges": [
+                        [
+                            30, 2,
+                            12, 2
+                        ]
+                    ]
+                },
+                {
+                    "name": "ground",
+                    "type": "ground",
+                    "ranges": [
+                        [
+                            20, 5,
+                            11, 1
                         ]
                     ]
                 }
             ]
+            
         }
     ],
     "entities": [

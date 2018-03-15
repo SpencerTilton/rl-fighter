@@ -5,7 +5,7 @@ export default class Run extends Trait {
         super('run');
 
         this.dir = 0;
-        this.acceleration = 400;
+        this.acceleration = 1000;
         this.deceleration = 300;
         this.dragFactor = 1/5000;
 

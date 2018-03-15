@@ -56,7 +56,7 @@ async function main(canvas) {
     timer.update = function update(deltaTime) {
         level.update(deltaTime);
 
-        camera.pos.x = Math.max(0, player.pos.x - 100);
+        camera.pos.x = Math.max(0, player.pos.x - 400);
 
         level.comp.draw(context, camera);
     }

@@ -8,10 +8,8 @@ export default class Solid extends Trait {
 
     obstruct(entity, side, match) {
         if (!this.obstructs) {
-            console.log(this);
             return;
         }
-        console.log(entity, side, match)
         if (side === Sides.BOTTOM) {
             entity.bounds.bottom = match.y1;
             entity.vel.y = 0;
