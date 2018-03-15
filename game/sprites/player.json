@@ -1,5 +1,5 @@
 {
-    "imageURL": "img/character1.png",
+    "imageURL": "img/example_character_spritesheet.png",
     "frames": [
         {
             "name": "idle",
