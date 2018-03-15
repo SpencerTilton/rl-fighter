@@ -1,0 +1,16 @@
+{
+    "imageURL": "/img/background.png",
+    "tileW": 50,
+    "tileH": 50,
+
+    "tiles": [
+        {
+            "name": "sky",
+            "index": [0, 0]
+        },
+        {
+            "name": "ground",
+            "index": [1, 0]
+        }
+    ]
+}

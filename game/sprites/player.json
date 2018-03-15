@@ -1,0 +1,12 @@
+{
+    "imageURL": "img/character1.png",
+    "frames": [
+        {
+            "name": "idle",
+            "rect": [35, 0, 160, 160]
+        }
+    ],
+    "animations": [
+        
+    ]
+}

@@ -1,22 +1,35 @@
 {
-    "backgrounds": [
+    "spriteSheet": "baseworld",
+    "layers": [
         {
-            "tile": "sky",
-            "ranges": [
-                [
-                    0, 75,
-                    0, 60
-                ]
+            "tiles": [
+                {
+                    "name": "sky",
+                    "ranges": [
+                        [
+                            0, 22,
+                            0, 14
+                        ]
+                    ]
+                }
             ]
         },
         {
-            "tile": "ground",
-            "ranges": [
-                [
-                    0, 75,
-                    40, 60
-                ]
+            "tiles":[    
+                {
+                    "name": "ground",
+                    "type": "ground",
+                    "ranges": [
+                        [
+                            0, 22,
+                            12, 2
+                        ]
+                    ]
+                }
             ]
         }
-    ]
+    ],
+    "entities": [
+        
+    ]    
 }

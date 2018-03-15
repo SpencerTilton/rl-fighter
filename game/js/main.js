@@ -1,59 +1,70 @@
-import Compositor from './compositor.js';
-import {loadLevel} from './loaders.js';
-import {loadPlayerSprite, loadBackgroundSprites} from './sprites.js';
-import {createBackgroundLayer} from './layers.js';
+import Camera from './Camera.js';
+import Entity from './Entity.js';
+import PlayerController from './traits/PlayerController.js';
+import Timer from './Timer.js';
+import {createLevelLoader} from './loaders/level.js';
+import {loadFont} from './loaders/font.js';
+import {loadEntities} from './entities.js';
+import {setupKeyboard} from './input.js';
+import {createCollisionLayer} from './layers/collision.js';
+import {createDashboardLayer} from './layers/dashboard.js';
 
 
-export const canvas = document.getElementById('ctx');
-const context = canvas.getContext('2d');
 const resolution = 10;  // 10px per graphic unit
-canvas.width = 110 * resolution;
-canvas.height = 70 * resolution;
 
 // used to scale values to appropriate resolution
 function rScale(scalefactor){
     return scalefactor * resolution;
 }
 
-function createSpriteLayer(sprite, pos) {
-    return function drawSpriteLayer(context) {
-        sprite.draw('idle', context, pos.x, pos.y);
-    };
+function createPlayerEnv(playerEntity) {
+    const playerEnv = new Entity();
+    const playerControl = new PlayerController();
+    playerControl.checkpoint.set(64, 64);
+    playerControl.setPlayer(playerEntity);
+    playerEnv.addTrait(playerControl);
+    return playerEnv;
 }
 
+async function main(canvas) {
+    const context = canvas.getContext('2d');
 
-Promise.all([
-    loadPlayerSprite(),
-    loadBackgroundSprites(),
-    loadLevel('base'),
-])
-.then(([playerSprite, backgroundSprites, level]) => {
-    console.log('Level loader', level);
+    const [entityFactory, font] = await Promise.all([
+        loadEntities(),
+        loadFont(),
+    ]);
 
-    const comp = new Compositor();
-    comp.layers.push(createBackgroundLayer(level.backgrounds, backgroundSprites));
+    const loadLevel = await createLevelLoader(entityFactory);
 
-    const pos = {
-        x: rScale(64),
-        y: rScale(62),
-    };
+    const level = await loadLevel('base');
 
-    comp.layers.push(createSpriteLayer(playerSprite, pos));
+    const camera = new Camera();
 
-    function update() {
-        comp.draw(context);
-        requestAnimationFrame(update);
+    const player = entityFactory.player();
+
+    const playerEnv = createPlayerEnv(player);
+    level.entities.add(playerEnv);
+
+
+    level.comp.layers.push(createCollisionLayer(level));
+    level.comp.layers.push(createDashboardLayer(font, playerEnv));
+
+    const input = setupKeyboard(player);
+    input.listenTo(window);
+
+    const timer = new Timer(1/60);
+    timer.update = function update(deltaTime) {
+        level.update(deltaTime);
+
+        camera.pos.x = Math.max(0, player.pos.x - 100);
+
+        level.comp.draw(context, camera);
     }
 
-    update();
-});
+    timer.start();
+}
 
-// let lastTime = 0;
-// function update(time = 0) {
-//     const deltaTime = time - lastTime;
-//     lastTime = time;
-
-//     requestAnimationFrame(update);
-// }
-
-// // update();
+const canvas = document.getElementById('screen');
+canvas.width = 110 * resolution;
+canvas.height = 70 * resolution;
+main(canvas);
