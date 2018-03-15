@@ -24,7 +24,7 @@ function createPlayerFactory(sprite) {
             // if ((player.vel.x > 0 && player.run.dir < 0) || (player.vel.x < 0 && player.run.dir > 0)) {
             //     return 'break';
             // }
-
+            console.log(runAnim(player.run.distance));
             return runAnim(player.run.distance);
         }
 

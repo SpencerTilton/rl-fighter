@@ -37,6 +37,6 @@ export default class Run extends Trait {
         const drag = this.dragFactor * entity.vel.x * absX;
         entity.vel.x -= drag;
 
-        this.distance += absX * deltaTime;
+        this.distance += absX * deltaTime / 80;
     }
 }
