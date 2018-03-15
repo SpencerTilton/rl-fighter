@@ -13,20 +13,20 @@ export function loadPlayer() {
 }
 
 function createPlayerFactory(sprite) {
-    //const runAnim = sprite.animations.get('run');
+    const runAnim = sprite.animations.get('run');
 
     function routeFrame(player) {
         if (player.jump.falling) {
             //return 'jump';
         }
 
-        // if (player.run.distance > 0) {
-        //     // if ((player.vel.x > 0 && player.run.dir < 0) || (player.vel.x < 0 && player.run.dir > 0)) {
-        //     //     return 'break';
-        //     // }
+        if (player.run.distance > 0) {
+            // if ((player.vel.x > 0 && player.run.dir < 0) || (player.vel.x < 0 && player.run.dir > 0)) {
+            //     return 'break';
+            // }
 
-        //     return runAnim(player.run.distance);
-        // }
+            return runAnim(player.run.distance);
+        }
 
         return 'idle';
     }
